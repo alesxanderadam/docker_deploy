@@ -1,0 +1,35 @@
+version: '3'
+services:
+  prisma:
+    container_name: project-prisma
+    image: mrdam2301/capstoneprisma:v1
+    # build: .
+    ports:
+      - 3001:3001
+    depends_on:
+      - mysql_dbcapstone
+    # env_file: .env
+    networks:
+      - node-network
+
+  mysql_dbcapstone:
+    image: mysql
+    container_name: mysql_dbcapstone
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=db_capstone
+      - MYSQL_ROOT_PASSWORD=1234
+    # env_file: .env
+    volumes:
+      - mysql_dbcapstone:/var/lib/mysql
+    networks:
+      - node-network
+
+volumes:
+  mysql_dbcapstone:
+    driver: local
+
+networks:
+  node-network:
+  
